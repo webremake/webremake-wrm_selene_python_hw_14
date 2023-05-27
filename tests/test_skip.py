@@ -8,21 +8,17 @@ from selene import browser, have
 
 @pytest.fixture(scope='function', params=["desktop", "mobile"])
 def browser_control(request):
+    browser.config.hold_browser_open = True
+    browser.config.browser_name = 'chrome'
+    browser.config.base_url = 'https://github.com'
+    browser.config.timeout = 6.0
     if request.param == "desktop":
-        browser.config.hold_browser_open = True
-        browser.config.browser_name = 'chrome'
-        browser.config.base_url = 'https://github.com'
         browser.config.window_width = '1240'
         browser.config.window_height = '768'
-        browser.config.timeout = 6.0
+
     if request.param == "mobile":
-        browser.config.hold_browser_open = True
-        browser.config.browser_name = 'chrome'
-        browser.config.base_url = 'https://github.com'
         browser.config.window_width = '390'
         browser.config.window_height = '600'
-        browser.config.timeout = 6.0
-
     yield
     browser.quit()
 
